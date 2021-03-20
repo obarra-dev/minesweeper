@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// BuildNewGame creates a new board game instance.
 func BuildNewGame(rows, columns int, minedPointTiles [][2]int) *Game {
 	board := make([][]Tile, rows)
 	for r := range board {
@@ -41,6 +42,7 @@ func (g Game) setUpMines(minedPointTiles [][2]int) {
 	}
 }
 
+// GenerateMinedPoints generates mines with random points.
 func GenerateMinedPoints(maxRowIncluded, maxColumnIncluded, amountPoints int) [][2]int {
 	tileMinePoints := make([][2]int, amountPoints)
 
@@ -60,4 +62,27 @@ func GenerateMinedPoints(maxRowIncluded, maxColumnIncluded, amountPoints int) []
 	}
 
 	return tileMinePoints
+}
+
+// ShowBoard shows all tile information of the game board.
+func (g Game) ShowBoard() {
+	for i := 0; i < g.Rows; i++ {
+		for j := 0; j < g.Columns; j++ {
+			fmt.Print(g.Board[i][j], " ")
+		}
+		fmt.Println()
+	}
+}
+
+// GetStates returns state tiles of the board game.
+func (g Game) GetStates() [][]StateTile {
+	states := make([][]StateTile, g.Rows)
+
+	for i := 0; i < g.Rows; i++ {
+		states[i] = make([]StateTile, g.Columns)
+		for j := 0; j < g.Columns; j++ {
+			states[i][j] = g.Board[i][j].State
+		}
+	}
+	return states
 }

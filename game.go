@@ -1,64 +1,10 @@
 package minesweeper
 
 import (
-	"fmt"
 	"log"
 )
 
-type StateTile int
-
-const (
-	StateTileCovered  StateTile = 1
-	StateTileClear    StateTile = 2
-	StateTileFlagged  StateTile = 3
-	StateTileNumberd  StateTile = 4
-	StateTileExploted StateTile = 5
-)
-
-type StateGame int
-
-const (
-	StateGameNew     StateGame = 1
-	StateGameRunning StateGame = 2
-	StateGameWon     StateGame = 3
-	StateGameLost    StateGame = 4
-)
-
-type TypeMove int
-
-const (
-	TypeMoveClean          TypeMove = 1
-	TypeMoveFlag           TypeMove = 2
-	TypeMoveQuestion       TypeMove = 3
-	TypeMoveRevertFlag     TypeMove = 4
-	TypeMoveRevertQuestion TypeMove = 5
-)
-
-type Tile struct {
-	State                StateTile
-	Row                  int
-	Column               int
-	SurroundingMineCount int
-	IsMine               bool
-	ValueTest            int
-}
-
-type Mine struct {
-	r      int
-	c      int
-	active bool
-}
-
-//TODO must be private to avoid invalid states
-type Game struct {
-	State      StateGame
-	Board      [][]Tile
-	Rows       int
-	Columns    int
-	MineAmount int
-	FlagAmount int
-}
-
+// Play applies a user move.
 func (g *Game) Play(r, c int, move TypeMove) Game {
 	var game Game
 
@@ -153,6 +99,8 @@ func (g Game) isFlawlessVictory() bool {
 }
 
 //TODO return points adjacent
+
+// RevealEmptyAdjacentTiles makes visible  on the board all adjacent tiles from a point.
 func (g Game) RevealEmptyAdjacentTiles(r int, c int) {
 	if g.Board[r][c].SurroundingMineCount == 0 {
 		adjecentTiles := g.getAdjacentTiles(r, c)
@@ -245,25 +193,4 @@ func (g Game) buildGameWithVisibleTiles() Game {
 		board = [][]Tile{}
 	}
 	return Game{g.State, board, g.Rows, g.Columns, g.MineAmount, g.FlagAmount}
-}
-
-func (g Game) ShowBoard() {
-	for i := 0; i < g.Rows; i++ {
-		for j := 0; j < g.Columns; j++ {
-			fmt.Print(g.Board[i][j], " ")
-		}
-		fmt.Println()
-	}
-}
-
-func (g Game) GetStates() [][]StateTile {
-	states := make([][]StateTile, g.Rows)
-
-	for i := 0; i < g.Rows; i++ {
-		states[i] = make([]StateTile, g.Columns)
-		for j := 0; j < g.Columns; j++ {
-			states[i][j] = g.Board[i][j].State
-		}
-	}
-	return states
 }
