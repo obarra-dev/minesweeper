@@ -22,13 +22,14 @@ jobs:
         run: make build
       - name: Linting
         run: |
-          LINT_OUTPUT="make lint"
+          exec 5>&1
+          LINT_OUTPUT="$(mingw32-make lint | grep -v 'gofmt -d .' | grep -v 'go vet ./...'  | grep -v 'golint ./...' )"
           if [ -n "$LINT_OUTPUT" ]; then
-            echo 'Linter error'
-            echo '$LINT_OUTPUT'
+            echo 'Linter ERROR'
+            echo "$LINT_OUTPUT"
             exit 1
           else
-            echo 'Linter ok'
+            echo 'Linter OK'
           fi
       - name: Testing
         run: make test
