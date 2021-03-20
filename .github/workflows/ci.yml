@@ -23,8 +23,9 @@ jobs:
       - name: Linting
         run: |
           LINT_OUTPUT="make lint"
-          if [ ! -n "$LINT_OUTPUT" ]; then
+          if [ -n "$LINT_OUTPUT" ]; then
             echo 'Linter error'
+            echo '$LINT_OUTPUT'
           else
             echo 'Linter ok'
           fi
