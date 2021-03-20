@@ -25,6 +25,6 @@ jobs:
           golint .
           go vet .
       - name: Testing
-        run: go test -v
+        run: go test -v -cover ./...
 
           
