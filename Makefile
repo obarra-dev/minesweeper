@@ -19,7 +19,7 @@ vet:
 	go vet ./...
 
 # Run all code checks.
-lint:  check_format go-lint vet
+lint:  check_format go_lint vet
 
 build:
 	go build -o ${BINARY} ./*.go
