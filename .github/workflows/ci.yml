@@ -23,7 +23,7 @@ jobs:
       - name: Linting
         run: |
           exec 5>&1
-          LINT_OUTPUT="$(mingw32-make lint | grep -v 'gofmt -d .' | grep -v 'go vet ./...'  | grep -v 'golint ./...' )"
+          LINT_OUTPUT="$(make lint | grep -v 'gofmt -d .' | grep -v 'go vet ./...'  | grep -v 'golint ./...' )"
           if [ -n "$LINT_OUTPUT" ]; then
             echo 'Linter ERROR'
             echo "$LINT_OUTPUT"
