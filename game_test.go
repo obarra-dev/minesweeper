@@ -8,7 +8,7 @@ import (
 
 func TestGenerateMinedPoints(t *testing.T) {
 	minedPoints := GenerateMinedPoints(24, 3, 8)
-	if len(minedPoints) != 10 {
+	if len(minedPoints) != 8 {
 		t.Error("Error", minedPoints, len(minedPoints))
 	}
 }
