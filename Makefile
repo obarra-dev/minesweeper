@@ -18,5 +18,9 @@ go_lint:
 vet:
 	go vet ./...
 
+# Run all code checks.
+lint:  check_format go-lint vet
+
 build:
 	go build -o ${BINARY} ./*.go
+
