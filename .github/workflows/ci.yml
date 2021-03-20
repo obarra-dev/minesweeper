@@ -26,6 +26,7 @@ jobs:
           if [ -n "$LINT_OUTPUT" ]; then
             echo 'Linter error'
             echo '$LINT_OUTPUT'
+            exit 1
           else
             echo 'Linter ok'
           fi
