@@ -21,7 +21,13 @@ jobs:
       - name: Building
         run: make build
       - name: Linting
-        run: make lint
+        run: |
+          LINT_OUTPUT="make lint"
+          if [ ! -n "$LINT_OUTPUT" ]; then
+            echo 'Linter error'
+          else
+            echo 'Linter ok'
+          fi
       - name: Testing
         run: make test
 
