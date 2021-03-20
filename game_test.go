@@ -1,4 +1,4 @@
-package engine
+package minesweeper
 
 import (
 	"fmt"
@@ -8,14 +8,15 @@ import (
 
 func TestGenerateMinedPoints(t *testing.T) {
 	minedPoints := GenerateMinedPoints(24, 3, 8)
-	if len(minedPoints) != 24 {
-		t.Error("Error", minedPoints)
+	if len(minedPoints) != 8 {
+		t.Error("Error", minedPoints, len(minedPoints))
 	}
 }
+
 func TestGenerateMinedPointsTwoMines(t *testing.T) {
 	minedPoints := GenerateMinedPoints(2, 3, 3)
-	if len(minedPoints) != 2 {
-		t.Error("Error", minedPoints)
+	if len(minedPoints) != 3 {
+		t.Error("Error", minedPoints, len(minedPoints))
 	}
 }
 
