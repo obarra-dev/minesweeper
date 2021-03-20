@@ -1,9 +1,9 @@
 BINARY=minesweeper
 
-test_local:
+test:
 	go test -cover ./...
 
-test:
+report:
 	go test -json > report.json -cover -coverprofile=coverage.out -race ./...
 
 format:
@@ -11,6 +11,9 @@ format:
 
 check_format:
 	gofmt -d .
+
+go_lint:
+	golint ./...
 
 vet:
 	go vet ./...

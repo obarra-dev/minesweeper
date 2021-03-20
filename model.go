@@ -3,7 +3,6 @@ package minesweeper
 // StateTile is a enum, it's represents the state of the tile.
 type StateTile int
 
-
 const (
 	StateTileCovered  StateTile = 1
 	StateTileClear    StateTile = 2

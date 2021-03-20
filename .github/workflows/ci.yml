@@ -22,8 +22,8 @@ jobs:
         run: go build .
       - name: Linting
         run: |
-          go vet .
           golint .
+          go vet .
       - name: Testing
         run: go test -v
 
