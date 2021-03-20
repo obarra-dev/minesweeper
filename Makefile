@@ -12,5 +12,8 @@ format:
 check_format:
 	gofmt -d .
 
+vet:
+	go vet ./...
+
 build:
 	go build -o ${BINARY} ./*.go
