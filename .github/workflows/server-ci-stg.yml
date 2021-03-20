@@ -1,0 +1,48 @@
+name: Server Beyond CI Staging App
+on:
+  pull_request:
+    branches:
+      - staging
+    paths:
+      - 'packages/server/**'
+
+jobs:
+  server-deploy:
+    name: Server Pull Request CI
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./packages/server
+      lib-directory: ./packages/lib
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+        working-directory: ${{ env.working-directory }}
+      - uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-server-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-server
+      - name: Install lib Dependencies
+        run: npm i
+        working-directory: ${{ env.lib-directory }}
+      - name: Build Lib
+        run: npm run build
+        working-directory: ${{ env.lib-directory }}
+      - name: Installing Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Linting
+        run: yarn lint:server
+      - name: Test
+        run: yarn test:server
+      - name: Build
+        run: yarn build
+        working-directory: ${{ env.working-directory }}
