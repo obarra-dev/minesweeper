@@ -19,12 +19,12 @@ jobs:
           go version
           go get -u golang.org/x/lint/golint
       - name: Building
-        run: go build .
+        run: make build
       - name: Linting
         run: |
           golint .
           go vet .
       - name: Testing
-        run: go test -v -cover ./...
+        run: make test
 
           
