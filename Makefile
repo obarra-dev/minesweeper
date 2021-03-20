@@ -6,5 +6,11 @@ test_local:
 test:
 	go test -json > report.json -cover -coverprofile=coverage.out -race ./...
 
+format:
+	gofmt -s -w .
+
+check_format:
+	gofmt -d .
+
 build:
 	go build -o ${BINARY} ./*.go
