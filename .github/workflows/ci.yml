@@ -22,6 +22,8 @@ jobs:
         run: make build
       - name: Linting
         run: |
+          LINT_OUTPUT="$(make lint)"
+          echo "$LINT_OUTPUT"
           LINT_LINES="$(make lint | wc -l)"
           if [ "$LINT_LINES" -ne 3 ]; then
             echo 'Linter ERROR'
