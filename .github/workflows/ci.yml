@@ -22,7 +22,7 @@ jobs:
         run: make build
       - name: Linting
         run: |
-          LINT_OUTPUT="$(make lint | grep -v 'go vet ./...'  | grep -v 'golint ./...' )"
+          LINT_OUTPUT="$(make lint | grep -v 'gofmt -d .'  | grep -v 'go vet ./...'  | grep -v 'golint ./...' )"
           echo "$LINT_OUTPUT"
       - name: Testing
         run: make test
