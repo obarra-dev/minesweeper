@@ -8,7 +8,7 @@ import (
 )
 
 // NewMinesweeper creates a new board game instance.
-func NewMinesweeper(rows, columns int, minedPointTiles [][2]int) *Game {
+func NewMinesweeper(rows, columns int, minedPointTiles [][2]int) *game {
 	board := make([][]Tile, rows)
 	for r := range board {
 		board[r] = make([]Tile, columns)
@@ -22,13 +22,13 @@ func NewMinesweeper(rows, columns int, minedPointTiles [][2]int) *Game {
 		}
 	}
 
-	game := &Game{StateGameNew, board, rows, columns, len(minedPointTiles), 0}
+	game := &game{StateGameNew, board, rows, columns, len(minedPointTiles), 0}
 	game.setUpMines(minedPointTiles)
 
 	return game
 }
 
-func (g Game) setUpMines(minedPointTiles [][2]int) {
+func (g game) setUpMines(minedPointTiles [][2]int) {
 	for _, mine := range minedPointTiles {
 		r := mine[0]
 		c := mine[1]
@@ -65,7 +65,7 @@ func GenerateMinedPoints(maxRowIncluded, maxColumnIncluded, amountPoints int) []
 }
 
 // ShowBoard shows all tile information of the game board.
-func (g Game) ShowBoard() {
+func (g game) ShowBoard() {
 	for i := 0; i < g.Rows; i++ {
 		for j := 0; j < g.Columns; j++ {
 			fmt.Print(g.Board[i][j], " ")
@@ -75,7 +75,7 @@ func (g Game) ShowBoard() {
 }
 
 // GetStates returns state tiles of the board game.
-func (g Game) GetStates() [][]StateTile {
+func (g game) GetStates() [][]StateTile {
 	states := make([][]StateTile, g.Rows)
 
 	for i := 0; i < g.Rows; i++ {

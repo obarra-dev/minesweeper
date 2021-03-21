@@ -52,10 +52,8 @@ type Mine struct {
 	active bool
 }
 
-//TODO must be private to avoid invalid states
-
-// Game holds board game information.
-type Game struct {
+// game holds board game information.
+type game struct {
 	State      StateGame
 	Board      [][]Tile
 	Rows       int
