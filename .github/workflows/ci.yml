@@ -22,9 +22,8 @@ jobs:
         run: make build
       - name: Linting
         run: |
-          LINT_OUTPUT="$(make lint)"
+          LINT_OUTPUT="$(make lint | wc -l)"
           echo "$LINT_OUTPUT"
-          echo "$LINT_OUTPUT" | grep -v 'gofmt -dxxx .'  | grep -v 'go vet ./...'  | grep -v 'golint ./...'
 
       - name: Testing
         run: make test
