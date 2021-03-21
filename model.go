@@ -3,9 +3,9 @@ package minesweeper
 // StateTile is a enum, it's represents the state of the tile.
 type StateTile int
 
-
+// All possible states of the tile.
 const (
-	StateTileCovered  StateTile =1
+	StateTileCovered  StateTile = 1
 	StateTileClear    StateTile = 2
 	StateTileFlagged  StateTile = 3
 	StateTileNumberd  StateTile = 4
