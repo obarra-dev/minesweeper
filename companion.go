@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// BuildNewGame creates a new board game instance.
-func BuildNewGame(rows, columns int, minedPointTiles [][2]int) *Game {
+// NewMinesweeper creates a new board game instance.
+func NewMinesweeper(rows, columns int, minedPointTiles [][2]int) *Game {
 	board := make([][]Tile, rows)
 	for r := range board {
 		board[r] = make([]Tile, columns)

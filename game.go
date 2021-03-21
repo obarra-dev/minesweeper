@@ -26,7 +26,7 @@ func (g Game) isMovePlayed(r, c int, move TypeMove) bool {
 		return false
 	}
 
-	if tile.State == StateTileNumberd || tile.State == StateTileClear || tile.State == StateTileExploted {
+	if tile.State == StateTileNumbered || tile.State == StateTileClear || tile.State == StateTileExploited {
 		return true
 	}
 
@@ -39,7 +39,7 @@ func (g *Game) playOpenMove(r, c int) Game {
 	//game over, so show all tiles
 	if tile.IsMine {
 		log.Println("Game Over")
-		tile.State = StateTileExploted
+		tile.State = StateTileExploited
 		g.State = StateGameLost
 		return g.copyGame()
 	}
@@ -50,7 +50,7 @@ func (g *Game) playOpenMove(r, c int) Game {
 		tile.State = StateTileClear
 	} else {
 		log.Println("Tile was Numbered")
-		tile.State = StateTileNumberd
+		tile.State = StateTileNumbered
 	}
 
 	g.RevealEmptyAdjacentTiles(r, c)
@@ -103,15 +103,15 @@ func (g Game) isFlawlessVictory() bool {
 // RevealEmptyAdjacentTiles makes visible  on the board all adjacent tiles from a point.
 func (g Game) RevealEmptyAdjacentTiles(r int, c int) {
 	if g.Board[r][c].SurroundingMineCount == 0 {
-		adjecentTiles := g.getAdjacentTiles(r, c)
-		for i := 0; i < len(adjecentTiles); i++ {
-			if adjecentTiles[i].IsMine != true &&
-				(adjecentTiles[i].State == StateTileCovered || adjecentTiles[i].State == StateTileFlagged) {
-				if adjecentTiles[i].SurroundingMineCount == 0 {
-					g.Board[adjecentTiles[i].Row][adjecentTiles[i].Column].State = StateTileClear
-					g.RevealEmptyAdjacentTiles(adjecentTiles[i].Row, adjecentTiles[i].Column)
+		adjacentTiles := g.getAdjacentTiles(r, c)
+		for i := 0; i < len(adjacentTiles); i++ {
+			if adjacentTiles[i].IsMine != true &&
+				(adjacentTiles[i].State == StateTileCovered || adjacentTiles[i].State == StateTileFlagged) {
+				if adjacentTiles[i].SurroundingMineCount == 0 {
+					g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].State = StateTileClear
+					g.RevealEmptyAdjacentTiles(adjacentTiles[i].Row, adjacentTiles[i].Column)
 				} else {
-					g.Board[adjecentTiles[i].Row][adjecentTiles[i].Column].State = StateTileNumberd
+					g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].State = StateTileNumbered
 				}
 			}
 		}
@@ -180,7 +180,7 @@ func (g Game) buildGameWithVisibleTiles() Game {
 		var column []Tile
 		for j := 0; j < g.Columns; j++ {
 			if board := g.Board[i][j]; !board.IsMine &&
-				(board.State == StateTileClear || board.State == StateTileNumberd || board.State == StateTileFlagged) {
+				(board.State == StateTileClear || board.State == StateTileNumbered || board.State == StateTileFlagged) {
 				column = append(column, g.Board[i][j])
 			}
 		}
