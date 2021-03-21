@@ -1,5 +1,7 @@
 package minesweeper
 
+// TODO use minesweeper_test
+
 import (
 	"fmt"
 	"reflect"

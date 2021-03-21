@@ -12,10 +12,10 @@ const (
 	StateTileExploited StateTile = 5
 )
 
-// StateGame is a enum, it's represents the state of the game.
+// StateGame is a enum, it's represents the state of the Game.
 type StateGame int
 
-// All possible states of the game.
+// All possible states of the Game.
 const (
 	StateGameNew     StateGame = 1
 	StateGameRunning StateGame = 2
@@ -35,7 +35,7 @@ const (
 	TypeMoveRevertQuestion TypeMove = 5
 )
 
-// Tile holds tile information in the board game.
+// Tile holds tile information in the board Game.
 type Tile struct {
 	State                StateTile
 	Row                  int
@@ -45,15 +45,17 @@ type Tile struct {
 	ValueTest            int
 }
 
-// Mine holds mine information in the board game.
+// Mine holds mine information in the board Game.
 type Mine struct {
 	r      int
 	c      int
 	active bool
 }
 
-// game holds board game information.
-type game struct {
+//TODO must be private
+
+// Game holds board Game information.
+type Game struct {
 	State      StateGame
 	Board      [][]Tile
 	Rows       int

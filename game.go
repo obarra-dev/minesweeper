@@ -5,8 +5,8 @@ import (
 )
 
 // Play applies a user move.
-func (g *game) Play(r, c int, move TypeMove) game {
-	var game game
+func (g *Game) Play(r, c int, move TypeMove) Game {
+	var game Game
 
 	if g.isMovePlayed(r, c, move) {
 		g.State = StateGameRunning
@@ -20,7 +20,7 @@ func (g *game) Play(r, c int, move TypeMove) game {
 	return game
 }
 
-func (g game) isMovePlayed(r, c int, move TypeMove) bool {
+func (g Game) isMovePlayed(r, c int, move TypeMove) bool {
 	tile := g.Board[r][c]
 	if tile.State == StateTileCovered {
 		return false
@@ -33,12 +33,12 @@ func (g game) isMovePlayed(r, c int, move TypeMove) bool {
 	return tile.State == StateTileFlagged && move == TypeMoveFlag
 }
 
-func (g *game) playOpenMove(r, c int) game {
+func (g *Game) playOpenMove(r, c int) Game {
 	tile := &g.Board[r][c]
 
-	//game over, so show all tiles
+	//Game over, so show all tiles
 	if tile.IsMine {
-		log.Println("game Over")
+		log.Println("Game Over")
 		tile.State = StateTileExploited
 		g.State = StateGameLost
 		return g.copyGame()
@@ -55,20 +55,20 @@ func (g *game) playOpenMove(r, c int) game {
 
 	g.RevealEmptyAdjacentTiles(r, c)
 
-	// game won, clear all tiles
+	// Game won, clear all tiles
 	if g.isFlawlessVictory() {
 		log.Println("Flawless Victory")
 		g.State = StateGameWon
 		return g.copyGame()
 	}
 
-	log.Println("The game is Running")
+	log.Println("The Game is Running")
 	g.State = StateGameRunning
 	return g.buildGameWithVisibleTiles()
 }
 
 //TODO use Type Move Question
-func (g *game) mark(r, c int) game {
+func (g *Game) mark(r, c int) Game {
 	tile := &g.Board[r][c]
 
 	if tile.State == StateTileCovered {
@@ -85,7 +85,7 @@ func (g *game) mark(r, c int) game {
 	return g.buildGameWithVisibleTiles()
 }
 
-func (g game) isFlawlessVictory() bool {
+func (g Game) isFlawlessVictory() bool {
 	for i := 0; i < g.Rows; i++ {
 		for j := 0; j < g.Columns; j++ {
 			if board := g.Board[i][j]; !board.IsMine &&
@@ -101,7 +101,7 @@ func (g game) isFlawlessVictory() bool {
 //TODO return points adjacent
 
 // RevealEmptyAdjacentTiles makes visible  on the board all adjacent tiles from a point.
-func (g game) RevealEmptyAdjacentTiles(r int, c int) {
+func (g Game) RevealEmptyAdjacentTiles(r int, c int) {
 	if g.Board[r][c].SurroundingMineCount == 0 {
 		adjacentTiles := g.getAdjacentTiles(r, c)
 		for i := 0; i < len(adjacentTiles); i++ {
@@ -118,7 +118,7 @@ func (g game) RevealEmptyAdjacentTiles(r int, c int) {
 	}
 }
 
-func (g game) getAdjacentTiles(f int, c int) []Tile {
+func (g Game) getAdjacentTiles(f int, c int) []Tile {
 	minF := -1
 	if f == 0 {
 		minF = 0
@@ -156,7 +156,7 @@ func (g game) getAdjacentTiles(f int, c int) []Tile {
 	return adjecentTiles
 }
 
-func (g game) copyGame() game {
+func (g Game) copyGame() Game {
 	board := make([][]Tile, g.Rows)
 
 	for r := range board {
@@ -170,11 +170,11 @@ func (g game) copyGame() game {
 		}
 	}
 
-	return game{g.State, board, g.Rows, g.Columns, g.MineAmount, g.FlagAmount}
+	return Game{g.State, board, g.Rows, g.Columns, g.MineAmount, g.FlagAmount}
 }
 
 //TODO no return matrix
-func (g game) buildGameWithVisibleTiles() game {
+func (g Game) buildGameWithVisibleTiles() Game {
 	var board [][]Tile
 	for i := 0; i < g.Rows; i++ {
 		var column []Tile
@@ -192,5 +192,5 @@ func (g game) buildGameWithVisibleTiles() game {
 	if board == nil {
 		board = [][]Tile{}
 	}
-	return game{g.State, board, g.Rows, g.Columns, g.MineAmount, g.FlagAmount}
+	return Game{g.State, board, g.Rows, g.Columns, g.MineAmount, g.FlagAmount}
 }
