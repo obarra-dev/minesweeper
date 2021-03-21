@@ -22,9 +22,14 @@ jobs:
         run: make build
       - name: Linting
         run: |
-          LINT_OUTPUT="$(make lint | wc -l)"
-          echo "$LINT_OUTPUT"
-
+          LINT_LINES="$(make lint | wc -l)"
+          if [ "$LINT_LINES" -ne 3 ]; then
+            echo 'Linter ERROR'
+            echo "$LINT_LINES"
+            exit 1
+          else
+            echo 'Linter OK'
+          fi
       - name: Testing
         run: make test
 
