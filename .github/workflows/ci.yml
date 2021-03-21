@@ -22,7 +22,15 @@ jobs:
         run: make build
       - name: Linting
         run: |
-          echo 'Linter OK'
+          LINT_OUTPUT="$(make lint | grep -v 'gofmt -d .' | grep -v 'go vet ./...'  | grep -v 'golint ./...' )"
+          if [ -n "$LINT_OUTPUT" ]; then
+            echo 'Linter ERROR'
+            echo "$LINT_OUTPUT"
+            exit 1
+          else
+            echo 'Linter OK'
+          fi
+           echo 'Linter xxxx'
       - name: Testing
         run: make test
 
