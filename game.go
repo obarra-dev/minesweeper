@@ -7,15 +7,18 @@ import (
 // Play applies a user move.
 func (g *Game) Play(r, c int, move TypeMove) Game {
 	var game Game
-
-	switch {
-	case g.isMovePlayed(r, c, move):
+	if g.isMovePlayed(r, c, move) {
 		game.State = StateGameRunning
-		game = g.buildGameWithVisibleTiles()
-	case move == TypeMoveClean:
-		game = g.playOpenMove(r, c)
-	case move != TypeMoveClean:
-		game = g.mark(r, c)
+		return g.buildGameWithVisibleTiles()
+	}
+
+	switch move {
+	case TypeMoveClean:
+		game = g.playMoveClean(r, c)
+	case TypeMoveFlag, TypeMoveRevertFlag:
+		game = g.playMoveFlag(r, c)
+	default:
+		log.Println("invalid type move")
 	}
 
 	return game
@@ -34,7 +37,7 @@ func (g Game) isMovePlayed(r, c int, move TypeMove) bool {
 	return tile.State == StateTileFlagged && move == TypeMoveFlag
 }
 
-func (g *Game) playOpenMove(r, c int) Game {
+func (g *Game) playMoveClean(r, c int) Game {
 	tile := &g.Board[r][c]
 
 	//Game over, so show all tiles
@@ -69,7 +72,7 @@ func (g *Game) playOpenMove(r, c int) Game {
 }
 
 //TODO use Type Move Question
-func (g *Game) mark(r, c int) Game {
+func (g *Game) playMoveFlag(r, c int) Game {
 	tile := &g.Board[r][c]
 
 	if tile.State == StateTileCovered {
