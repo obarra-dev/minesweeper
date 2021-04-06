@@ -8,12 +8,13 @@ import (
 func (g *Game) Play(r, c int, move TypeMove) Game {
 	var game Game
 
-	if g.isMovePlayed(r, c, move) {
-		g.State = StateGameRunning
+	switch {
+	case g.isMovePlayed(r, c, move):
+		game.State = StateGameRunning
 		game = g.buildGameWithVisibleTiles()
-	} else if move == TypeMoveClean {
+	case move == TypeMoveClean:
 		game = g.playOpenMove(r, c)
-	} else if move != TypeMoveClean {
+	case move != TypeMoveClean:
 		game = g.mark(r, c)
 	}
 
@@ -22,11 +23,11 @@ func (g *Game) Play(r, c int, move TypeMove) Game {
 
 func (g Game) isMovePlayed(r, c int, move TypeMove) bool {
 	tile := g.Board[r][c]
-	if tile.State == StateTileCovered {
-		return false
-	}
 
-	if tile.State == StateTileNumbered || tile.State == StateTileClear || tile.State == StateTileExploited {
+	switch tile.State {
+	case StateTileCovered:
+		return false
+	case StateTileNumbered, StateTileClear, StateTileExploited:
 		return true
 	}
 
@@ -72,11 +73,11 @@ func (g *Game) mark(r, c int) Game {
 	tile := &g.Board[r][c]
 
 	if tile.State == StateTileCovered {
-		log.Println("Flaging")
+		log.Println("Flagging")
 		tile.State = StateTileFlagged
 		g.FlagAmount++
 	} else if tile.State == StateTileFlagged {
-		log.Println("Covering again")
+		log.Println("Covering")
 		tile.State = StateTileCovered
 		g.FlagAmount--
 	}
@@ -98,10 +99,25 @@ func (g Game) isFlawlessVictory() bool {
 	return true
 }
 
+func (g Game) setUpMines(minedPointTiles [][2]int) {
+	for _, mine := range minedPointTiles {
+		r := mine[0]
+		c := mine[1]
+
+		g.Board[r][c].IsMine = true
+
+		adjacentTiles := g.getAdjacentTiles(r, c)
+		for i := 0; i < len(adjacentTiles); i++ {
+			g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].SurroundingMineCount++
+		}
+	}
+}
+
+
 //TODO return points adjacent
 
 // RevealEmptyAdjacentTiles makes visible  on the board all adjacent tiles from a point.
-func (g Game) RevealEmptyAdjacentTiles(r int, c int) {
+func (g Game) RevealEmptyAdjacentTiles(r, c int) {
 	if g.Board[r][c].SurroundingMineCount == 0 {
 		adjacentTiles := g.getAdjacentTiles(r, c)
 		for i := 0; i < len(adjacentTiles); i++ {
@@ -118,10 +134,10 @@ func (g Game) RevealEmptyAdjacentTiles(r int, c int) {
 	}
 }
 
-func (g Game) getAdjacentTiles(f int, c int) []Tile {
-	minF := -1
-	if f == 0 {
-		minF = 0
+func (g Game) getAdjacentTiles(r, c int) []Tile {
+	minR := -1
+	if r == 0 {
+		minR = 0
 	}
 
 	minC := -1
@@ -129,9 +145,9 @@ func (g Game) getAdjacentTiles(f int, c int) []Tile {
 		minC = 0
 	}
 
-	maxF := 1
-	if f == (g.Rows - 1) {
-		maxF = 0
+	maxR := 1
+	if r == (g.Rows - 1) {
+		maxR = 0
 	}
 
 	maxC := 1
@@ -139,21 +155,21 @@ func (g Game) getAdjacentTiles(f int, c int) []Tile {
 		maxC = 0
 	}
 
-	var adjecentTiles []Tile
+	var adjacentTiles []Tile
 	for cc := minC; cc <= maxC; cc++ {
-		for ff := minF; ff <= maxF; ff++ {
-			if cc == 0 && ff == 0 {
+		for rr := minR; rr <= maxR; rr++ {
+			if cc == 0 && rr == 0 {
 				continue
 			}
 
-			var resultF = ff + f
+			var resultR = rr + r
 			var resultC = cc + c
 
-			adjecentTiles = append(adjecentTiles, g.Board[resultF][resultC])
+			adjacentTiles = append(adjacentTiles, g.Board[resultR][resultC])
 		}
 	}
 
-	return adjecentTiles
+	return adjacentTiles
 }
 
 func (g Game) copyGame() Game {

@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-// NewMinesweeper creates a new board Game instance.
-func NewMinesweeper(rows, columns int, minedPointTiles [][2]int) *Game {
+// New creates a new board Game instance.
+func New(rows, columns int, mines [][2]int) *Game {
 	board := make([][]Tile, rows)
 	for r := range board {
 		board[r] = make([]Tile, columns)
@@ -22,24 +22,10 @@ func NewMinesweeper(rows, columns int, minedPointTiles [][2]int) *Game {
 		}
 	}
 
-	game := &Game{StateGameNew, board, rows, columns, len(minedPointTiles), 0}
-	game.setUpMines(minedPointTiles)
+	game := &Game{StateGameNew, board, rows, columns, len(mines), 0}
+	game.setUpMines(mines)
 
 	return game
-}
-
-func (g Game) setUpMines(minedPointTiles [][2]int) {
-	for _, mine := range minedPointTiles {
-		r := mine[0]
-		c := mine[1]
-
-		g.Board[r][c].IsMine = true
-
-		adjacentTiles := g.getAdjacentTiles(r, c)
-		for i := 0; i < len(adjacentTiles); i++ {
-			g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].SurroundingMineCount++
-		}
-	}
 }
 
 // GenerateMinedPoints generates mines with random points.
