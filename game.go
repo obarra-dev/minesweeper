@@ -113,7 +113,6 @@ func (g Game) setUpMines(minedPointTiles [][2]int) {
 	}
 }
 
-
 //TODO return points adjacent
 
 // RevealEmptyAdjacentTiles makes visible  on the board all adjacent tiles from a point.
