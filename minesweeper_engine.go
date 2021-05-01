@@ -4,25 +4,6 @@ import (
 	"log"
 )
 
-// Play applies a user move.
-func (g *Game) Play(r, c int, move TypeMove) Game {
-	var game Game
-	if g.isMovePlayed(r, c, move) {
-		game.State = StateGameRunning
-		return g.buildGameWithVisibleTiles()
-	}
-
-	switch move {
-	case TypeMoveClean:
-		game = g.playMoveClean(r, c)
-	case TypeMoveFlag, TypeMoveRevertFlag:
-		game = g.playMoveFlag(r, c)
-	default:
-		log.Println("invalid type move")
-	}
-
-	return game
-}
 
 func (g Game) isMovePlayed(r, c int, move TypeMove) bool {
 	tile := g.Board[r][c]
