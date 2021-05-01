@@ -31,9 +31,7 @@ func New(rows, columns int, mines [][2]int) *Game {
 // GenerateMinedPoints generates mines with random points.
 func GenerateMinedPoints(maxRowIncluded, maxColumnIncluded, amountPoints int) [][2]int {
 	tileMinePoints := make([][2]int, amountPoints)
-
 	setPoints := make(map[string]bool)
-
 	for len(setPoints) < amountPoints {
 		concatenated := fmt.Sprint(rand.Intn(maxRowIncluded), "-", rand.Intn(maxColumnIncluded))
 		setPoints[concatenated] = true
