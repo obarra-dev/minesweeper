@@ -8,18 +8,38 @@ import (
 	"testing"
 )
 
-func TestGenerateMinedPoints(t *testing.T) {
-	minedPoints := GenerateMinedPoints(24, 3, 8)
-	if len(minedPoints) != 8 {
-		t.Error("Error", minedPoints, len(minedPoints))
-	}
-}
+func TestGenerateMines(t *testing.T) {
+	t.Run("generate mine when is big", func(t *testing.T) {
+		mines := GenerateMines(200, 200, 200)
+		expect := 200
+		if len(mines) != expect {
+			t.Errorf("got %d expect %d", expect, len(mines))
+		}
+	})
 
-func TestGenerateMinedPointsTwoMines(t *testing.T) {
-	minedPoints := GenerateMinedPoints(2, 3, 3)
-	if len(minedPoints) != 3 {
-		t.Error("Error", minedPoints, len(minedPoints))
-	}
+	t.Run("generate mine when is matrix is small", func(t *testing.T) {
+		mines := GenerateMines(1, 1, 1)
+		expect := 1
+		if len(mines) != expect {
+			t.Errorf("got %d expect %d", expect, len(mines))
+		}
+	})
+
+	t.Run("generate mine when is matrix has no rows", func(t *testing.T) {
+		mines := GenerateMines(0, 10, 3)
+		expect := 0
+		if len(mines) != expect {
+			t.Errorf("got %d expect %d", expect, len(mines))
+		}
+	})
+
+	t.Run("generate mine when is matrix has no columns", func(t *testing.T) {
+		mines := GenerateMines(10, 0, 3)
+		expect := 0
+		if len(mines) != expect {
+			t.Errorf("got %d expect %d", expect, len(mines))
+		}
+	})
 }
 
 func TestSetUpMines(t *testing.T) {

@@ -28,12 +28,16 @@ func New(rows, columns int, mines [][2]int) *Game {
 	return game
 }
 
-// GenerateMinedPoints generates mines with random points.
-func GenerateMinedPoints(maxRowIncluded, maxColumnIncluded, amountPoints int) [][2]int {
-	tileMinePoints := make([][2]int, amountPoints)
+// GenerateMines generates mines with random mines for given matrix.
+func GenerateMines(rows, columns, amountMines int) [][2]int {
+	if rows <= 0  || columns <= 0{
+		return [][2]int{}
+	}
+
+	tileMinePoints := make([][2]int, amountMines)
 	setPoints := make(map[string]bool)
-	for len(setPoints) < amountPoints {
-		concatenated := fmt.Sprint(rand.Intn(maxRowIncluded), "-", rand.Intn(maxColumnIncluded))
+	for len(setPoints) < amountMines {
+		concatenated := fmt.Sprint(rand.Intn(rows), "-", rand.Intn(columns))
 		setPoints[concatenated] = true
 	}
 
