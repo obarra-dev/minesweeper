@@ -9,7 +9,7 @@ import (
 )
 
 // New creates a new board Game instance.
-func New(rows, columns int, mines []mine) *Game {
+func New(rows, columns int, mines []Mine) *Game {
 	board := make([][]Tile, rows)
 	for r := range board {
 		board[r] = make([]Tile, columns)
@@ -49,16 +49,10 @@ func (g *Game) Play(r, c int, move TypeMove) Game {
 	return game
 }
 
-
-type mine struct {
-	r int
-	c int
-}
-
 // GenerateMines generates mines with random mines for given matrix.
-func GenerateMines(rows, columns, amountMines int) []mine {
+func GenerateMines(rows, columns, amountMines int) []Mine {
 	if rows <= 0 || columns <= 0 {
-		return []mine{}
+		return []Mine{}
 	}
 
 	const (
@@ -76,12 +70,12 @@ func GenerateMines(rows, columns, amountMines int) []mine {
 		return setOfPoints
 	}
 
-	var mines []mine
+	var mines []Mine
 	for key := range generateRandomPoints() {
 		point := strings.Split(key, separator)
 		row, _ := strconv.Atoi(point[r])
 		column, _ := strconv.Atoi(point[c])
-		mines = append(mines, mine{
+		mines = append(mines, Mine{
 			r: row,
 			c: column,
 		})

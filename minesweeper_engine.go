@@ -82,7 +82,7 @@ func (g Game) isFlawlessVictory() bool {
 	return true
 }
 
-func (g Game) setUpMines(mines []mine) {
+func (g Game) setUpMines(mines []Mine) {
 	for _, mine := range mines {
 		g.Board[mine.r][mine.c].IsMine = true
 		adjacentTiles := g.getAdjacentTiles(mine.r, mine.c)
