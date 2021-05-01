@@ -8,7 +8,7 @@ import (
 )
 
 func TestBuildGame(t *testing.T) {
-	game := minesweeper.New(3, 3, [][2]int{})
+	game := minesweeper.New(3, 3, minesweeper.GenerateMines(0, 0 , 0))
 	game.ShowBoard()
 
 	if len(game.Board) != 3 || game.Rows != 3 &&
@@ -16,6 +16,7 @@ func TestBuildGame(t *testing.T) {
 		t.Error("Error", len(game.Board), len(game.Board[0]))
 	}
 }
+
 
 func TestGenerateMines(t *testing.T) {
 	t.Run("generate mine when is big", func(t *testing.T) {
@@ -50,6 +51,7 @@ func TestGenerateMines(t *testing.T) {
 		}
 	})
 }
+
 
 func TestSetUpMines(t *testing.T) {
 	minedPointTile := [][2]int{{0, 1}, {1, 1}, {1, 0}}

@@ -9,7 +9,7 @@ import (
 )
 
 // New creates a new board Game instance.
-func New(rows, columns int, mines [][2]int) *Game {
+func New(rows, columns int, mines []mine) *Game {
 	board := make([][]Tile, rows)
 	for r := range board {
 		board[r] = make([]Tile, columns)

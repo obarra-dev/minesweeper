@@ -4,7 +4,6 @@ import (
 	"log"
 )
 
-
 func (g Game) isMovePlayed(r, c int, move TypeMove) bool {
 	tile := g.Board[r][c]
 
@@ -83,14 +82,10 @@ func (g Game) isFlawlessVictory() bool {
 	return true
 }
 
-func (g Game) setUpMines(minedPointTiles [][2]int) {
-	for _, mine := range minedPointTiles {
-		r := mine[0]
-		c := mine[1]
-
-		g.Board[r][c].IsMine = true
-
-		adjacentTiles := g.getAdjacentTiles(r, c)
+func (g Game) setUpMines(mines []mine) {
+	for _, mine := range mines {
+		g.Board[mine.r][mine.c].IsMine = true
+		adjacentTiles := g.getAdjacentTiles(mine.r, mine.c)
 		for i := 0; i < len(adjacentTiles); i++ {
 			g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].SurroundingMineCount++
 		}
