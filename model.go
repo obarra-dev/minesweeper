@@ -5,11 +5,11 @@ type StateTile int
 
 // All possible states of the tile.
 const (
-	StateTileCovered   StateTile = 1
-	StateTileClear     StateTile = 2
-	StateTileFlagged   StateTile = 3
-	StateTileNumbered  StateTile = 4
-	StateTileExploited StateTile = 5
+	StateTileCovered StateTile = iota
+	StateTileClear
+	StateTileFlagged
+	StateTileNumbered
+	StateTileExploited
 )
 
 // StateGame is a enum, it's represents the state of the Game.
@@ -17,10 +17,10 @@ type StateGame int
 
 // All possible states of the Game.
 const (
-	StateGameNew     StateGame = 1
-	StateGameRunning StateGame = 2
-	StateGameWon     StateGame = 3
-	StateGameLost    StateGame = 4
+	StateGameNew StateGame = iota
+	StateGameRunning
+	StateGameWon
+	StateGameLost
 )
 
 // TypeMove is a enum, it's represents the type of user move.
@@ -28,11 +28,11 @@ type TypeMove int
 
 // All possible types of the user move.
 const (
-	TypeMoveClean          TypeMove = 1
-	TypeMoveFlag           TypeMove = 2
-	TypeMoveQuestion       TypeMove = 3
-	TypeMoveRevertFlag     TypeMove = 4
-	TypeMoveRevertQuestion TypeMove = 5
+	TypeMoveClean TypeMove = iota
+	TypeMoveFlag
+	TypeMoveRevertFlag
+	TypeMoveQuestion
+	TypeMoveRevertQuestion
 )
 
 // Tile holds tile information in the board Game.
@@ -46,8 +46,8 @@ type Tile struct {
 
 // Mine holds mine information in the board Game.
 type Mine struct {
-	R      int
-	C      int
+	Row    int
+	Column int
 	active bool
 }
 

@@ -42,9 +42,9 @@ func (g *Game) Play(r, c int, move TypeMove) Game {
 
 func (g Game) setUpMines(mines []Mine) {
 	for _, mine := range mines {
-		g.Board[mine.R][mine.C].IsMine = true
+		g.Board[mine.Row][mine.Column].IsMine = true
 
-		tiles := g.getAdjacentTiles(mine.R, mine.C)
+		tiles := g.getAdjacentTiles(mine.Row, mine.Column)
 		for i := 0; i < len(tiles); i++ {
 			g.Board[tiles[i].Row][tiles[i].Column].SurroundingMineCount++
 		}

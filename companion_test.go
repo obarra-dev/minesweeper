@@ -54,8 +54,8 @@ func isRandomMines(mines []minesweeper.Mine, rows, columns int) bool {
 	}
 
 	for _, m := range mines {
-		if unique := board[m.R][m.C]; !unique {
-			board[m.R][m.C] = true
+		if unique := board[m.Row][m.Column]; !unique {
+			board[m.Row][m.Column] = true
 		} else {
 			return false
 		}

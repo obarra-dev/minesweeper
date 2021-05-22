@@ -10,9 +10,9 @@ import (
 func Test_New(t *testing.T) {
 	t.Run("board 3x3", func(t *testing.T) {
 		mines := []minesweeper.Mine{
-			{R: 0, C: 1},
-			{R: 1, C: 1},
-			{R: 1, C: 0},
+			{Row: 0, Column: 1},
+			{Row: 1, Column: 1},
+			{Row: 1, Column: 0},
 		}
 		game := minesweeper.New(3, 3, mines)
 
@@ -36,7 +36,7 @@ func Test_New(t *testing.T) {
 
 func Test_Play(t *testing.T) {
 	t.Run("when clean into no mine should continue running", func(t *testing.T) {
-		mines := []minesweeper.Mine{{R: 1, C: 1}}
+		mines := []minesweeper.Mine{{Row: 1, Column: 1}}
 		game := minesweeper.New(3, 3, mines)
 
 		got := game.Play(0, 0, minesweeper.TypeMoveClean).State
@@ -48,7 +48,7 @@ func Test_Play(t *testing.T) {
 	})
 
 	t.Run("when clean into mine should lose", func(t *testing.T) {
-		mines := []minesweeper.Mine{{R: 1, C: 1}}
+		mines := []minesweeper.Mine{{Row: 1, Column: 1}}
 		game := minesweeper.New(3, 3, mines)
 
 		got := game.Play(1, 1, minesweeper.TypeMoveClean).State
@@ -60,7 +60,7 @@ func Test_Play(t *testing.T) {
 	})
 
 	t.Run("when clean all ok should win", func(t *testing.T) {
-		mines := []minesweeper.Mine{{R: 1, C: 1}}
+		mines := []minesweeper.Mine{{Row: 1, Column: 1}}
 		game := minesweeper.New(3, 3, mines)
 
 		caseTests := []struct {

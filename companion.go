@@ -30,8 +30,8 @@ func GenerateMines(rows, columns, amountMines int) []Mine {
 	var mines []Mine
 	for p := range generateRandomPoints() {
 		mines = append(mines, Mine{
-			R: p.r,
-			C: p.c,
+			Row:    p.r,
+			Column: p.c,
 		})
 	}
 

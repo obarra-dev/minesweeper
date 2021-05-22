@@ -66,7 +66,7 @@ func Test_revealEmptyAdjacentTiles(t *testing.T) {
 	}
 
 	t.Run("3x3", func(t *testing.T) {
-		mines := []Mine{{R: 1, C: 1}}
+		mines := []Mine{{Row: 1, Column: 1}}
 		game := New(3, 3, mines)
 
 		game.revealEmptyAdjacentTiles(0, 0)
@@ -83,7 +83,7 @@ func Test_revealEmptyAdjacentTiles(t *testing.T) {
 	})
 
 	t.Run("3x8", func(t *testing.T) {
-		mines := []Mine{{R: 1, C: 1}}
+		mines := []Mine{{Row: 1, Column: 1}}
 		game := New(3, 8, mines)
 
 		game.revealEmptyAdjacentTiles(0, 5)
