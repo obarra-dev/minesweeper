@@ -37,9 +37,9 @@ func Test_New(t *testing.T) {
 func Test_Play(t *testing.T) {
 	t.Run("when clean into no mine should continue running", func(t *testing.T) {
 		mines := []minesweeper.Mine{{Row: 1, Column: 1}}
-		game := minesweeper.New(3, 3, mines)
+		game := minesweeper.New(20, 30, mines)
 
-		got := game.Play(0, 0, minesweeper.TypeMoveClean).State
+		got := game.Play(19, 29, minesweeper.TypeMoveClean).State
 
 		expect := minesweeper.StateGameRunning
 		if got != expect {
@@ -112,6 +112,31 @@ func Test_Play(t *testing.T) {
 				t.Errorf("Test[%d]: game.Play(%d,%d,%d) expect %+v, got %+v",
 					i, ct.r, ct.c, ct.move, ct.expect, got)
 			}
+		}
+	})
+
+	t.Run("when the move already was played", func(t *testing.T) {
+		mines := []minesweeper.Mine{{Row: 1, Column: 1}}
+		game := minesweeper.New(3, 3, mines)
+
+		game.Play(0, 0, minesweeper.TypeMoveClean)
+		got := game.Play(0, 0, minesweeper.TypeMoveClean).State
+
+		expect := minesweeper.StateGameRunning
+		if got != expect {
+			t.Errorf("expect %d got %d", expect, got)
+		}
+	})
+
+	t.Run("when the move is invalid should no change the state game", func(t *testing.T) {
+		mines := []minesweeper.Mine{{Row: 1, Column: 1}}
+		game := minesweeper.New(3, 3, mines)
+
+		got := game.Play(0, 0, 99).State
+
+		expect := minesweeper.StateGameNew
+		if got != expect {
+			t.Errorf("expect %d got %d", expect, got)
 		}
 	})
 }

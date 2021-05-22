@@ -3,7 +3,7 @@ package minesweeper
 import (
 	"log"
 )
-
+//TODO manage errors
 // New creates a new board Game instance.
 func New(rows, columns int, mines []Mine) *Game {
 	board := make([][]Tile, rows)
@@ -211,7 +211,7 @@ func (g Game) copyGame() Game {
 	}
 }
 
-//TODO no return matrix?
+//TODO no return matrix, maybe vector? no return nothing? at the end the constructor return a public pointer struct
 func (g Game) buildGameWithVisibleTiles() Game {
 	var board [][]Tile
 	for i := 0; i < g.Rows; i++ {
