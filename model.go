@@ -42,7 +42,6 @@ type Tile struct {
 	Column               int
 	SurroundingMineCount int
 	IsMine               bool
-	ValueTest            int
 }
 
 // Mine holds mine information in the board Game.

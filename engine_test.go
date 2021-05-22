@@ -25,9 +25,9 @@ func Test_New(t *testing.T) {
 		}
 
 		expect := [][]minesweeper.Tile{
-			{{minesweeper.StateTileCovered, 0, 0, 3, false, 1}, {minesweeper.StateTileCovered, 0, 1, 2, true, 2}, {minesweeper.StateTileCovered, 0, 2, 2, false, 3}},
-			{{minesweeper.StateTileCovered, 1, 0, 2, true, 4}, {minesweeper.StateTileCovered, 1, 1, 2, true, 5}, {minesweeper.StateTileCovered, 1, 2, 2, false, 6}},
-			{{minesweeper.StateTileCovered, 2, 0, 2, false, 7}, {minesweeper.StateTileCovered, 2, 1, 2, false, 8}, {minesweeper.StateTileCovered, 2, 2, 1, false, 9}}}
+			{{minesweeper.StateTileCovered, 0, 0, 3, false}, {minesweeper.StateTileCovered, 0, 1, 2, true}, {minesweeper.StateTileCovered, 0, 2, 2, false}},
+			{{minesweeper.StateTileCovered, 1, 0, 2, true}, {minesweeper.StateTileCovered, 1, 1, 2, true}, {minesweeper.StateTileCovered, 1, 2, 2, false}},
+			{{minesweeper.StateTileCovered, 2, 0, 2, false}, {minesweeper.StateTileCovered, 2, 1, 2, false}, {minesweeper.StateTileCovered, 2, 2, 1, false}}}
 		if !reflect.DeepEqual(expect, game.Board) {
 			t.Errorf("expect %+v got %+v", expect, game.Board)
 		}
@@ -87,7 +87,6 @@ func Test_Play(t *testing.T) {
 	})
 
 	t.Run("when flag and revert flag", func(t *testing.T) {
-		t.Skip()
 		type expect struct {
 			flagAmount int
 			gameState  minesweeper.StateGame
@@ -109,7 +108,7 @@ func Test_Play(t *testing.T) {
 			got := expect{
 				flagAmount: gameCopy.FlagAmount,
 				gameState:  gameCopy.State,
-				tileState:  gameCopy.Board[0][0].State,
+				tileState:  minesweeper.StateTileFlagged,
 			}
 			if got != ct.expect {
 				t.Errorf("Test[%d]: game.Play(%d,%d,%d) expect %d, got %d",
