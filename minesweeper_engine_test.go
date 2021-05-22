@@ -10,7 +10,7 @@ func Test_getAdjacentTiles(t *testing.T) {
 		got := minesweeper.getAdjacentTiles(0, 0)
 		expect := 0
 		if len(got) != expect {
-			t.Errorf("got %d expect %d", len(got), expect)
+			t.Errorf("expect %d got %d", expect, len(got))
 		}
 	})
 
@@ -21,7 +21,7 @@ func Test_getAdjacentTiles(t *testing.T) {
 			got := minesweeper.getAdjacentTiles(1, 1)
 			expect := 8
 			if len(got) != expect {
-				t.Errorf("got %d expect %d", len(got), expect)
+				t.Errorf("expect %d got %d", expect, len(got))
 			}
 		})
 
@@ -29,7 +29,7 @@ func Test_getAdjacentTiles(t *testing.T) {
 			got := minesweeper.getAdjacentTiles(0, 2)
 			expect := 3
 			if len(got) != expect {
-				t.Errorf("got %d expect %d", len(got), expect)
+				t.Errorf("expect %d got %d", expect, len(got))
 			}
 		})
 
@@ -37,7 +37,7 @@ func Test_getAdjacentTiles(t *testing.T) {
 			got := minesweeper.getAdjacentTiles(2, 2)
 			expect := 3
 			if len(got) != expect {
-				t.Errorf("got %d expect %d", len(got), expect)
+				t.Errorf("expect %d got %d", expect, len(got))
 			}
 		})
 
@@ -45,7 +45,7 @@ func Test_getAdjacentTiles(t *testing.T) {
 			got := minesweeper.getAdjacentTiles(0, 0)
 			expect := 3
 			if len(got) != expect {
-				t.Errorf("got %d expect %d", len(got), expect)
+				t.Errorf("expect %d got %d", expect, len(got))
 			}
 		})
 	})

@@ -10,9 +10,12 @@ func Test_New(t *testing.T) {
 	t.Run("board 3x3", func(t *testing.T) {
 		game := minesweeper.New(3, 3, minesweeper.GenerateMines(0, 0, 0))
 
-		if len(game.Board) != 3 || game.Rows != 3 &&
-			len(game.Board[0]) != 3 || game.Columns != 3 {
-			t.Error("Error", len(game.Board), len(game.Board[0]))
+		if len(game.Board) != game.Rows || game.Rows != 3 {
+			t.Errorf("expect %d got %d", 3, len(game.Board))
+		}
+
+		if len(game.Board[0]) != game.Columns  || game.Columns != 3 {
+			t.Errorf("expect %d got %d", 3, len(game.Board[0]))
 		}
 	})
 }
@@ -22,7 +25,7 @@ func Test_GenerateMines(t *testing.T) {
 		mines := minesweeper.GenerateMines(200, 200, 200)
 		expect := 200
 		if len(mines) != expect {
-			t.Errorf("got %d expect %d", expect, len(mines))
+			t.Errorf("expect %d got %d", expect, len(mines))
 		}
 	})
 
@@ -30,7 +33,7 @@ func Test_GenerateMines(t *testing.T) {
 		mines := minesweeper.GenerateMines(1, 1, 1)
 		expect := 1
 		if len(mines) != expect {
-			t.Errorf("got %d expect %d", expect, len(mines))
+			t.Errorf("expect %d got %d", expect, len(mines))
 		}
 	})
 
@@ -38,7 +41,7 @@ func Test_GenerateMines(t *testing.T) {
 		mines := minesweeper.GenerateMines(0, 10, 3)
 		expect := 0
 		if len(mines) != expect {
-			t.Errorf("got %d expect %d", expect, len(mines))
+			t.Errorf("expect %d got %d", expect, len(mines))
 		}
 	})
 
@@ -46,15 +49,14 @@ func Test_GenerateMines(t *testing.T) {
 		mines := minesweeper.GenerateMines(10, 0, 3)
 		expect := 0
 		if len(mines) != expect {
-			t.Errorf("got %d expect %d", expect, len(mines))
+			t.Errorf("expect %d got %d", expect, len(mines))
 		}
 	})
 
 	t.Run("is random mines", func(t *testing.T) {
 		mines := minesweeper.GenerateMines(17, 4, 8)
-		expect := true
-		if got := isRandomMines(mines, 17, 4); expect != got {
-			t.Errorf("got %t expect %t", got, expect)
+		if got := isRandomMines(mines, 17, 4); !got {
+			t.Errorf("expect %t got %t", got, true)
 		}
 	})
 }
