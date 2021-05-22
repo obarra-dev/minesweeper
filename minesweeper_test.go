@@ -1,6 +1,9 @@
 package minesweeper
 
-import "testing"
+import (
+	"reflect"
+	"testing"
+)
 
 func Test_getAdjacentTiles(t *testing.T) {
 	t.Run("1x1 ", func(t *testing.T) {
@@ -46,5 +49,54 @@ func Test_getAdjacentTiles(t *testing.T) {
 				t.Errorf("expect %d got %d", expect, len(got))
 			}
 		})
+	})
+}
+
+func Test_revealEmptyAdjacentTiles(t *testing.T) {
+	getStateTiles := func(g Game) [][]StateTile {
+		states := make([][]StateTile, g.Rows)
+
+		for i := 0; i < g.Rows; i++ {
+			states[i] = make([]StateTile, g.Columns)
+			for j := 0; j < g.Columns; j++ {
+				states[i][j] = g.Board[i][j].State
+			}
+		}
+		return states
+	}
+
+	t.Run("3x3", func(t *testing.T) {
+		mines := []Mine{{R: 1, C: 1}}
+		game := New(3, 3, mines)
+
+		game.revealEmptyAdjacentTiles(0, 0)
+
+		expect := [][]StateTile{
+			{StateTileCovered, StateTileCovered, StateTileCovered},
+			{StateTileCovered, StateTileCovered, StateTileCovered},
+			{StateTileCovered, StateTileCovered, StateTileCovered}}
+
+		got := getStateTiles(*game)
+		if !reflect.DeepEqual(expect, got) {
+			t.Errorf("expect %+v got %+v", expect, game.Board)
+		}
+	})
+
+	t.Run("3x8", func(t *testing.T) {
+		mines := []Mine{{R: 1, C: 1}}
+		game := New(3, 8, mines)
+
+		game.revealEmptyAdjacentTiles(0, 5)
+
+		expect := [][]StateTile{
+			{StateTileCovered, StateTileCovered, StateTileNumbered, StateTileClear, StateTileClear, StateTileClear, StateTileClear, StateTileClear},
+			{StateTileCovered, StateTileCovered, StateTileNumbered, StateTileClear, StateTileClear, StateTileClear, StateTileClear, StateTileClear},
+			{StateTileCovered, StateTileCovered, StateTileNumbered, StateTileClear, StateTileClear, StateTileClear, StateTileClear, StateTileClear},
+		}
+
+		got := getStateTiles(*game)
+		if !reflect.DeepEqual(expect, got) {
+			t.Errorf("expect %+v got %+v", expect, game.Board)
+		}
 	})
 }

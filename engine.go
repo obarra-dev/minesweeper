@@ -78,7 +78,7 @@ func (g *Game) playMoveClean(r, c int) Game {
 		tile.State = StateTileNumbered
 	}
 
-	g.RevealEmptyAdjacentTiles(r, c)
+	g.revealEmptyAdjacentTiles(r, c)
 
 	// Game won, clear all tiles
 	if g.isFlawlessVictory() {
@@ -135,8 +135,8 @@ func (g Game) setUpMines(mines []Mine) {
 
 //TODO return points adjacent
 
-// RevealEmptyAdjacentTiles makes visible  on the board all adjacent tiles from a point.
-func (g Game) RevealEmptyAdjacentTiles(r, c int) {
+// RevealEmptyAdjacentTiles makes visible all adjacent tiles from a point on the board.
+func (g Game) revealEmptyAdjacentTiles(r, c int) {
 	if g.Board[r][c].SurroundingMineCount == 0 {
 		adjacentTiles := g.getAdjacentTiles(r, c)
 		for i := 0; i < len(adjacentTiles); i++ {
@@ -144,7 +144,7 @@ func (g Game) RevealEmptyAdjacentTiles(r, c int) {
 				(adjacentTiles[i].State == StateTileCovered || adjacentTiles[i].State == StateTileFlagged) {
 				if adjacentTiles[i].SurroundingMineCount == 0 {
 					g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].State = StateTileClear
-					g.RevealEmptyAdjacentTiles(adjacentTiles[i].Row, adjacentTiles[i].Column)
+					g.revealEmptyAdjacentTiles(adjacentTiles[i].Row, adjacentTiles[i].Column)
 				} else {
 					g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].State = StateTileNumbered
 				}
