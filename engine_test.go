@@ -99,7 +99,7 @@ func Test_Play(t *testing.T) {
 			expect expect
 		}{
 			{1, 1, minesweeper.TypeMoveFlag, expect{1, minesweeper.StateGameRunning, minesweeper.StateTileFlagged}},
-			{1, 1, minesweeper.TypeMoveRevertFlag, expect{0, minesweeper.StateGameRunning, minesweeper.StateTileFlagged}},
+			{1, 1, minesweeper.TypeMoveRevertFlag, expect{0, minesweeper.StateGameRunning, minesweeper.StateTileCovered}},
 		}
 
 		game := minesweeper.New(3, 3, []minesweeper.Mine{})
@@ -108,10 +108,10 @@ func Test_Play(t *testing.T) {
 			got := expect{
 				flagAmount: gameCopy.FlagAmount,
 				gameState:  gameCopy.State,
-				tileState:  minesweeper.StateTileFlagged,
+				tileState:  gameCopy.Board[ct.r][ct.c].State,
 			}
 			if got != ct.expect {
-				t.Errorf("Test[%d]: game.Play(%d,%d,%d) expect %d, got %d",
+				t.Errorf("Test[%d]: game.Play(%d,%d,%d) expect %+v, got %+v",
 					i, ct.r, ct.c, ct.move, ct.expect, got)
 			}
 		}

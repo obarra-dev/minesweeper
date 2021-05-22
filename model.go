@@ -41,7 +41,7 @@ type Mine struct {
 	Column int
 }
 
-//TODO must be private?
+//TODO must be private? if it's public, it can be set with invalid values
 type (
 	// Game holds board Game information.
 	Game struct {

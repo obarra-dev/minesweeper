@@ -217,6 +217,8 @@ func (g Game) buildGameWithVisibleTiles() Game {
 			if board := g.Board[i][j]; !board.IsMine &&
 				(board.State == StateTileClear || board.State == StateTileNumbered || board.State == StateTileFlagged) {
 				column = append(column, g.Board[i][j])
+			} else {
+				column = append(column, Tile{})
 			}
 		}
 		if column != nil && len(column) > 0 {
