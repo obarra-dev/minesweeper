@@ -35,29 +35,30 @@ const (
 	TypeMoveRevertQuestion
 )
 
-// Tile holds tile information in the board Game.
-type Tile struct {
-	State                StateTile
-	Row                  int
-	Column               int
-	SurroundingMineCount int
-	IsMine               bool
-}
-
 // Mine holds mine information in the board Game.
 type Mine struct {
 	Row    int
 	Column int
 }
 
-//TODO must be private
+//TODO must be private?
+type (
+	// Game holds board Game information.
+	Game struct {
+		State      StateGame
+		Board      [][]Tile
+		Rows       int
+		Columns    int
+		MineAmount int
+		FlagAmount int
+	}
 
-// Game holds board Game information.
-type Game struct {
-	State      StateGame
-	Board      [][]Tile
-	Rows       int
-	Columns    int
-	MineAmount int
-	FlagAmount int
-}
+	// Tile holds tile information in the board Game.
+	Tile struct {
+		State                StateTile
+		Row                  int
+		Column               int
+		SurroundingMineCount int
+		IsMine               bool
+	}
+)
