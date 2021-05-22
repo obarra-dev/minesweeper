@@ -48,7 +48,7 @@ func main() {
     case minesweeper.StateGameNew:
         fmt.Println("Game Start...")
     case minesweeper.StateGameRunning:
-     fmt.Println("Running...")
+        fmt.Println("Running...")
     case minesweeper.StateGameLost:
         fmt.Println("Game lost...")
     case minesweeper.StateGameWon:
