@@ -6,10 +6,9 @@ import (
 	"github.com/obarra-dev/minesweeper"
 )
 
-func TestBuildGame(t *testing.T) {
-	t.Run("m", func(t *testing.T) {
+func Test_New(t *testing.T) {
+	t.Run("board 3x3", func(t *testing.T) {
 		game := minesweeper.New(3, 3, minesweeper.GenerateMines(0, 0, 0))
-		game.ShowBoard()
 
 		if len(game.Board) != 3 || game.Rows != 3 &&
 			len(game.Board[0]) != 3 || game.Columns != 3 {
@@ -18,8 +17,8 @@ func TestBuildGame(t *testing.T) {
 	})
 }
 
-func TestGenerateMines(t *testing.T) {
-	t.Run("generate mine when is big", func(t *testing.T) {
+func Test_GenerateMines(t *testing.T) {
+	t.Run("when board is big", func(t *testing.T) {
 		mines := minesweeper.GenerateMines(200, 200, 200)
 		expect := 200
 		if len(mines) != expect {
@@ -27,7 +26,7 @@ func TestGenerateMines(t *testing.T) {
 		}
 	})
 
-	t.Run("generate mine when is matrix is small", func(t *testing.T) {
+	t.Run("when board is small", func(t *testing.T) {
 		mines := minesweeper.GenerateMines(1, 1, 1)
 		expect := 1
 		if len(mines) != expect {
@@ -35,7 +34,7 @@ func TestGenerateMines(t *testing.T) {
 		}
 	})
 
-	t.Run("generate mine when is matrix has no rows", func(t *testing.T) {
+	t.Run("when board has no rows", func(t *testing.T) {
 		mines := minesweeper.GenerateMines(0, 10, 3)
 		expect := 0
 		if len(mines) != expect {
@@ -43,7 +42,7 @@ func TestGenerateMines(t *testing.T) {
 		}
 	})
 
-	t.Run("generate mine when is matrix has no columns", func(t *testing.T) {
+	t.Run("when board has no columns", func(t *testing.T) {
 		mines := minesweeper.GenerateMines(10, 0, 3)
 		expect := 0
 		if len(mines) != expect {
