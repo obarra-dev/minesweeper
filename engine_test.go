@@ -141,6 +141,32 @@ func Test_Play(t *testing.T) {
 	})
 }
 
+func Example_minesweeper_Play() {
+	//start
+	mines := []minesweeper.Mine{{Row: 1, Column: 1}}
+	game := minesweeper.New(3, 8, mines)
+
+	//play
+	gameCopy := game.Play(0, 0, minesweeper.TypeMoveClean)
+
+	//show game state
+	switch gameCopy.State {
+	case minesweeper.StateGameNew:
+		fmt.Println("Game Start...")
+	case minesweeper.StateGameRunning:
+		fmt.Println("Running...")
+	case minesweeper.StateGameLost:
+		fmt.Println("Game lost...")
+	case minesweeper.StateGameWon:
+		fmt.Println("Game Won...")
+	default:
+		fmt.Println("Crash...")
+	}
+
+	// Output: Running...
+
+}
+
 func showBoard(g minesweeper.Game) {
 	for i := 0; i < g.Rows; i++ {
 		for j := 0; j < g.Columns; j++ {

@@ -5,6 +5,7 @@ import (
 )
 
 //TODO manage errors
+
 // New creates a new board Game instance.
 func New(rows, columns int, mines []Mine) *Game {
 	board := make([][]Tile, rows)
