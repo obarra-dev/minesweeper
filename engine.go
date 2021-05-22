@@ -7,7 +7,6 @@ import (
 // New creates a new board Game instance.
 func New(rows, columns int, mines []Mine) *Game {
 	board := make([][]Tile, rows)
-
 	for r := 0; r < rows; r++ {
 		board[r] = make([]Tile, columns)
 		for c := 0; c < columns; c++ {
@@ -44,9 +43,10 @@ func (g *Game) Play(r, c int, move TypeMove) Game {
 func (g Game) setUpMines(mines []Mine) {
 	for _, mine := range mines {
 		g.Board[mine.R][mine.C].IsMine = true
-		adjacentTiles := g.getAdjacentTiles(mine.R, mine.C)
-		for i := 0; i < len(adjacentTiles); i++ {
-			g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].SurroundingMineCount++
+
+		tiles := g.getAdjacentTiles(mine.R, mine.C)
+		for i := 0; i < len(tiles); i++ {
+			g.Board[tiles[i].Row][tiles[i].Column].SurroundingMineCount++
 		}
 	}
 }
@@ -129,7 +129,6 @@ func (g Game) isFlawlessVictory() bool {
 	return true
 }
 
-// RevealEmptyAdjacentTiles makes visible all adjacent tiles from a point on the board.
 func (g Game) revealEmptyAdjacentTiles(r, c int) {
 	if g.Board[r][c].SurroundingMineCount == 0 {
 		adjacentTiles := g.getAdjacentTiles(r, c)
@@ -186,12 +185,8 @@ func (g Game) getAdjacentTiles(r, c int) []Tile {
 
 func (g Game) copyGame() Game {
 	board := make([][]Tile, g.Rows)
-
-	for r := range board {
-		board[r] = make([]Tile, g.Columns)
-	}
-
 	for i := 0; i < g.Rows; i++ {
+		board[i] = make([]Tile, g.Columns)
 		for j := 0; j < g.Columns; j++ {
 			privateBoard := g.Board[i][j]
 			board[i][j] = Tile{privateBoard.State, i, j, privateBoard.SurroundingMineCount, privateBoard.IsMine}
