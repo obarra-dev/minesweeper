@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"strconv"
-	"strings"
 )
 
 // New creates a new board Game instance.
@@ -49,35 +47,34 @@ func (g *Game) Play(r, c int, move TypeMove) Game {
 	return game
 }
 
-// GenerateMines generates mines with random mines for given matrix.
+// GenerateMines generates random mines for given length board.
 func GenerateMines(rows, columns, amountMines int) []Mine {
 	if rows <= 0 || columns <= 0 {
 		return []Mine{}
 	}
 
-	const (
-		r         = 0
-		c         = 1
-		separator = "-"
-	)
+	type point struct {
+		r int
+		c int
+	}
 
-	generateRandomPoints := func() map[string]bool {
-		setOfPoints := make(map[string]bool)
-		for len(setOfPoints) < amountMines {
-			point := fmt.Sprint(rand.Intn(rows), separator, rand.Intn(columns))
-			setOfPoints[point] = true
+	generateRandomPoints := func() map[point]bool {
+		points := make(map[point]bool)
+		for len(points) < amountMines {
+			p := point{
+				r: rand.Intn(rows),
+				c: rand.Intn(columns),
+			}
+			points[p] = true
 		}
-		return setOfPoints
+		return points
 	}
 
 	var mines []Mine
-	for key := range generateRandomPoints() {
-		point := strings.Split(key, separator)
-		row, _ := strconv.Atoi(point[r])
-		column, _ := strconv.Atoi(point[c])
+	for p := range generateRandomPoints() {
 		mines = append(mines, Mine{
-			r: row,
-			c: column,
+			R: p.r,
+			C: p.c,
 		})
 	}
 

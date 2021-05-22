@@ -47,8 +47,8 @@ type Tile struct {
 
 // Mine holds mine information in the board Game.
 type Mine struct {
-	r      int
-	c      int
+	R      int
+	C      int
 	active bool
 }
 

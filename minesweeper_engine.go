@@ -84,8 +84,8 @@ func (g Game) isFlawlessVictory() bool {
 
 func (g Game) setUpMines(mines []Mine) {
 	for _, mine := range mines {
-		g.Board[mine.r][mine.c].IsMine = true
-		adjacentTiles := g.getAdjacentTiles(mine.r, mine.c)
+		g.Board[mine.R][mine.C].IsMine = true
+		adjacentTiles := g.getAdjacentTiles(mine.R, mine.C)
 		for i := 0; i < len(adjacentTiles); i++ {
 			g.Board[adjacentTiles[i].Row][adjacentTiles[i].Column].SurroundingMineCount++
 		}

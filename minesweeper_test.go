@@ -49,6 +49,31 @@ func Test_GenerateMines(t *testing.T) {
 			t.Errorf("got %d expect %d", expect, len(mines))
 		}
 	})
+
+	t.Run("is random mines", func(t *testing.T) {
+		mines := minesweeper.GenerateMines(17, 4, 8)
+		expect := true
+		if got := isRandomMines(mines, 17, 4); expect != got {
+			t.Errorf("got %t expect %t", got, expect)
+		}
+	})
+}
+
+func isRandomMines(mines []minesweeper.Mine, rows, columns int) bool {
+	board := make([][]bool, rows)
+	for r := 0; r < rows; r++ {
+		board[r] = make([]bool, columns)
+	}
+
+	for _, m := range mines {
+		if unique := board[m.R][m.C]; !unique {
+			board[m.R][m.C] = true
+		} else {
+			return false
+		}
+	}
+
+	return true
 }
 
 /**
