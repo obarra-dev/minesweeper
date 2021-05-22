@@ -164,7 +164,6 @@ func Example_minesweeper_Play() {
 	}
 
 	// Output: Running...
-
 }
 
 func showBoard(g minesweeper.Game) {

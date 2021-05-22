@@ -37,9 +37,9 @@ Let's game it out
 ```go
 func main() {
     //start
-	mines := []minesweeper.Mine{{Row: 1, Column: 1}}
-    game := minesweeper.NewMinesweeper(3, 8, mines)
-
+    mines := []minesweeper.Mine{{Row: 1, Column: 1}}
+    game := minesweeper.New(3, 8, mines)
+    
     //play
     gameCopy := game.Play(0, 0, minesweeper.TypeMoveClean)
     
@@ -48,7 +48,7 @@ func main() {
     case minesweeper.StateGameNew:
         fmt.Println("Game Start...")
     case minesweeper.StateGameRunning:
-        fmt.Println("Running...")
+     fmt.Println("Running...")
     case minesweeper.StateGameLost:
         fmt.Println("Game lost...")
     case minesweeper.StateGameWon:
