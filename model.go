@@ -48,7 +48,6 @@ type Tile struct {
 type Mine struct {
 	Row    int
 	Column int
-	active bool
 }
 
 //TODO must be private
