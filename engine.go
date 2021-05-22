@@ -4,6 +4,47 @@ import (
 	"log"
 )
 
+// New creates a new board Game instance.
+func New(rows, columns int, mines []Mine) *Game {
+	board := make([][]Tile, rows)
+	for r := range board {
+		board[r] = make([]Tile, columns)
+	}
+
+	cont := 0
+	for r := 0; r < rows; r++ {
+		for c := 0; c < columns; c++ {
+			cont++
+			board[r][c] = Tile{StateTileCovered, r, c, 0, false, cont}
+		}
+	}
+
+	game := &Game{StateGameNew, board, rows, columns, len(mines), 0}
+	game.setUpMines(mines)
+
+	return game
+}
+
+// Play applies a user move.
+func (g *Game) Play(r, c int, move TypeMove) Game {
+	var game Game
+	if g.isMovePlayed(r, c, move) {
+		game.State = StateGameRunning
+		return g.buildGameWithVisibleTiles()
+	}
+
+	switch move {
+	case TypeMoveClean:
+		game = g.playMoveClean(r, c)
+	case TypeMoveFlag, TypeMoveRevertFlag:
+		game = g.playMoveFlag(r, c)
+	default:
+		log.Println("invalid type move")
+	}
+
+	return game
+}
+
 func (g Game) isMovePlayed(r, c int, move TypeMove) bool {
 	tile := g.Board[r][c]
 
