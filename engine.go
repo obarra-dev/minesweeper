@@ -3,6 +3,7 @@ package minesweeper
 import (
 	"log"
 )
+
 //TODO manage errors
 // New creates a new board Game instance.
 func New(rows, columns int, mines []Mine) *Game {
