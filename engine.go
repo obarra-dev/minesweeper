@@ -25,7 +25,6 @@ func New(rows, columns int, mines []Mine) *Game {
 		Rows:       rows,
 		Columns:    columns,
 		MineAmount: len(mines),
-		FlagAmount: 0,
 	}
 	game.setUpMines(mines)
 
@@ -117,11 +116,9 @@ func (g *Game) playMoveFlag(r, c int) Game {
 	if tile.State == StateTileCovered {
 		log.Println("Flagging")
 		tile.State = StateTileFlagged
-		g.FlagAmount++
 	} else if tile.State == StateTileFlagged {
 		log.Println("Covering")
 		tile.State = StateTileCovered
-		g.FlagAmount--
 	}
 
 	g.State = StateGameRunning
@@ -205,7 +202,13 @@ func (g Game) copyGame() Game {
 		}
 	}
 
-	return Game{g.State, board, g.Rows, g.Columns, g.MineAmount, g.FlagAmount}
+	return Game{
+		State:      g.State,
+		Board:      board,
+		Rows:       g.Rows,
+		Columns:    g.Columns,
+		MineAmount: g.MineAmount,
+	}
 }
 
 //TODO no return matrix?
@@ -229,5 +232,11 @@ func (g Game) buildGameWithVisibleTiles() Game {
 	if board == nil {
 		board = [][]Tile{}
 	}
-	return Game{g.State, board, g.Rows, g.Columns, g.MineAmount, g.FlagAmount}
+	return Game{
+		State:      g.State,
+		Board:      board,
+		Rows:       g.Rows,
+		Columns:    g.Columns,
+		MineAmount: g.MineAmount,
+	}
 }

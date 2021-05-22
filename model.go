@@ -50,7 +50,6 @@ type (
 		Rows       int
 		Columns    int
 		MineAmount int
-		FlagAmount int
 	}
 
 	// Tile holds tile information in the board Game.

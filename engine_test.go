@@ -88,9 +88,8 @@ func Test_Play(t *testing.T) {
 
 	t.Run("when flag and revert flag", func(t *testing.T) {
 		type expect struct {
-			flagAmount int
-			gameState  minesweeper.StateGame
-			tileState  minesweeper.StateTile
+			gameState minesweeper.StateGame
+			tileState minesweeper.StateTile
 		}
 
 		caseTests := []struct {
@@ -98,17 +97,16 @@ func Test_Play(t *testing.T) {
 			move   minesweeper.TypeMove
 			expect expect
 		}{
-			{1, 1, minesweeper.TypeMoveFlag, expect{1, minesweeper.StateGameRunning, minesweeper.StateTileFlagged}},
-			{1, 1, minesweeper.TypeMoveRevertFlag, expect{0, minesweeper.StateGameRunning, minesweeper.StateTileCovered}},
+			{1, 1, minesweeper.TypeMoveFlag, expect{minesweeper.StateGameRunning, minesweeper.StateTileFlagged}},
+			{1, 1, minesweeper.TypeMoveRevertFlag, expect{minesweeper.StateGameRunning, minesweeper.StateTileCovered}},
 		}
 
 		game := minesweeper.New(3, 3, []minesweeper.Mine{})
 		for i, ct := range caseTests {
 			gameCopy := game.Play(ct.r, ct.c, ct.move)
 			got := expect{
-				flagAmount: gameCopy.FlagAmount,
-				gameState:  gameCopy.State,
-				tileState:  gameCopy.Board[ct.r][ct.c].State,
+				gameState: gameCopy.State,
+				tileState: gameCopy.Board[ct.r][ct.c].State,
 			}
 			if got != ct.expect {
 				t.Errorf("Test[%d]: game.Play(%d,%d,%d) expect %+v, got %+v",
