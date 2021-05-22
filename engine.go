@@ -10,11 +10,23 @@ func New(rows, columns int, mines []Mine) *Game {
 	for r := 0; r < rows; r++ {
 		board[r] = make([]Tile, columns)
 		for c := 0; c < columns; c++ {
-			board[r][c] = Tile{StateTileCovered, r, c, 0, false}
+			board[r][c] = Tile{
+				State:                StateTileCovered,
+				Row:                  r,
+				Column:               c,
+				SurroundingMineCount: 0,
+				IsMine:               false,
+			}
 		}
 	}
 
-	game := &Game{StateGameNew, board, rows, columns, len(mines), 0}
+	game := &Game{State: StateGameNew,
+		Board:      board,
+		Rows:       rows,
+		Columns:    columns,
+		MineAmount: len(mines),
+		FlagAmount: 0,
+	}
 	game.setUpMines(mines)
 
 	return game
