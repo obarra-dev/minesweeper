@@ -35,12 +35,11 @@ func New(rows, columns int, mines []Mine) *Game {
 
 // Play applies a user move.
 func (g *Game) Play(r, c int, move TypeMove) Game {
-	var game Game
-	if g.isMovePlayed(r, c, move) {
-		game.State = StateGameRunning
+	if g.State == StateGameLost || g.isMovePlayed(r, c, move) {
 		return g.buildGameWithVisibleTiles()
 	}
 
+	var game Game
 	switch move {
 	case TypeMoveClean:
 		game = g.playMoveClean(r, c)

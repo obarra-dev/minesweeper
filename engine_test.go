@@ -128,6 +128,25 @@ func Test_Play(t *testing.T) {
 		}
 	})
 
+
+	t.Run("when the game was lost and move again", func(t *testing.T) {
+		mines := []minesweeper.Mine{{Row: 1, Column: 1}}
+		game := minesweeper.New(3, 3, mines)
+
+		got := game.Play(1, 1, minesweeper.TypeMoveClean).State
+		expect := minesweeper.StateGameLost
+		if got != expect {
+			t.Errorf("expect %d got %d", expect, got)
+		}
+
+		got = game.Play(0, 0, minesweeper.TypeMoveClean).State
+		expect = minesweeper.StateGameLost
+		if got != expect {
+			t.Errorf("expect %d got %d", expect, got)
+		}
+	})
+
+
 	t.Run("when the move is invalid should no change the state game", func(t *testing.T) {
 		mines := []minesweeper.Mine{{Row: 1, Column: 1}}
 		game := minesweeper.New(3, 3, mines)
